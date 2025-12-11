@@ -21,25 +21,40 @@ STEP-5: Display the cipher text obtained above.
 
 ## PROGRAM:
 
-```python
-def caesar_cipher(text, shift):
-    result = ""
+```c
+#include <stdio.h>
+#include <ctype.h>  // for isalpha, isupper, islower
 
-    for char in text:
-        if char.isalpha():  
-            base = ord('A') if char.isupper() else ord('a')
-            result += chr((ord(char) - base + shift) % 26 + base)
-        else:
-            result += char  
-    return result
+// Caesar Cipher function
+void caesar_cipher(char text[], int shift, char result[]) {
+    int i = 0;
+    while (text[i] != '\0') {
+        char ch = text[i];
+        if (isalpha(ch)) {
+            char base = isupper(ch) ? 'A' : 'a';
+            result[i] = (ch - base + shift) % 26 + base;
+        } else {
+            result[i] = ch;  // keep spaces or punctuation unchanged
+        }
+        i++;
+    }
+    result[i] = '\0';  // null-terminate the result string
+}
 
-plaintext = "HELLO WORLD"
-shift = 3
-ciphertext = caesar_cipher(plaintext, shift)
+int main() {
+    char plaintext[] = "HELLO WORLD";
+    int shift = 3;
+    char ciphertext[100];  // buffer for result
 
-print("Plaintext:", plaintext)
-print("Shift:", shift)
-print("Ciphertext:", ciphertext)
+    caesar_cipher(plaintext, shift, ciphertext);
+
+    printf("Plaintext: %s\n", plaintext);
+    printf("Shift: %d\n", shift);
+    printf("Ciphertext: %s\n", ciphertext);
+
+    return 0;
+}
+
 ```
 ## OUTPUT:
 <img width="325" height="116" alt="Screenshot 2025-10-18 191257" src="https://github.com/user-attachments/assets/85258bdd-88b1-42fc-aa3c-910366eb43e1" />
